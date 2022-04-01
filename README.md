@@ -1,4 +1,4 @@
-# SNIPPET NETWORK
+# SnippetNetwork
 
 In its first iteration, this project converts pieces of code to VS Code's JSON syntax for user-defined Snippets. Snippets facilitate greatly improved productivity when working in Visual Studio Code by allowing commonly reused code to be quickly and easily added to existing code. After a user-defined Snippet has been written in the appropriate \<language\>.json file, all it takes is triggering IntelliSense to suggest the Snippet by typing the "Prefix" value and pressing tab.
 
