@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code To Snippet | Snippet Network</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="shortcut icon" type="image/svg" href="{{ url_for('static', filename='images/snippet_network_logo_1.svg') }}">
+</head>
+<body onload="init()">
+    <div class="top_nav_bar flex_row">
+        <div class="flex_row gap30 left_head">
+            <a href="/"><h1 class="head1 light_text"><span class="white_logo_text">S</span>nippet<span class="white_logo_text">N</span>etwork</h1></a>
+        </div>
+    </div>
+    <div class="content flex_row light_text">
+        <div class="flex_col" id="left_col">
+            <div class="flex_col gap30">
+                <div class="input_section">
+                    <h3 class="input_label"><label for="title_text">Title</label></h3>
+                    <input type="text" name="title_text" id="title_text" class="text_input" autocomplete="off">
+                </div>
+                <div class="input_section">
+                    <h3 class="input_label"><label for="prefix_text">Prefix</label></h3>
+                    <input type="text" name="prefix_text" id="prefix_text" class="text_input" autocomplete="off">
+                </div>
+                <div class="input_section">
+                    <h3 class="input_label"><label for="description_text">Description</label></h3>
+                    <textarea name="description_text" id="description_text" rows="5" cols="25" class="text_input"></textarea>
+                </div>
+            </div>
+            <div class="flex_col gap30">
+                <div class="input_section">
+                    <h3 class="input_label"><label for="tab_stop_placeholder_text">Tab Stop Placeholder Text</label></h3>
+                    <input type="text" name="tab_stop_placeholder_text" id="tab_stop_placeholder_text" class="text_input" autocomplete="off">
+                </div>
+                <div class="input_section flex_row between">
+                    <label for="tab_stop_number" class="h3_text">Tab Stop Number</label>
+                    <select name="tab_stop_number" id="tab_stop_number">
+                        <option value="0">Final (0)</option>
+                        <option disabled>--------</option>
+                        <option value="1" selected>1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                        <option value="13">13</option>
+                        <option value="14">14</option>
+                        <option value="15">15</option>
+                        <option value="16">16</option>
+                        <option value="17">17</option>
+                        <option value="18">18</option>
+                        <option value="19">19</option>
+                        <option value="20">20</option>
+                    </select>
+                </div>
+                <button id="tab_stop_button">Tab Stop At Cursor</button>
+            </div>
+        </div>
+        <div class="flex_col" id="middle_col">
+            <div class="input_section center">
+                <h3 class="input_label center_label"><label for="body_text">Code</label></h3>
+                <textarea name="body_text" id="body_text" class="code" rows="35" cols="60" spellcheck="false" placeholder="Code goes here..."></textarea>
+            </div>
+        </div>
+        <div class="flex_col" id="right_col">
+            <div class="input_section center">
+                <h3 class="input_label center_label"><label for="snippet_text">Snippet</label></h3>
+                <textarea name="snippet_text" id="snippet_text" class="code" rows="35" cols="60" tabindex="-1" readonly spellcheck="false"></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="bottom">
+        <div id="footer_container">
+            <table id="footer_table">
+                <tr>
+                    <td>By <a href="https://www.linkedin.com/in/ben-rosenberg-688a60213" class="link">Ben Rosenberg</a></td>
+                    <td><a href="https://github.com/ben-rosenberg/snippet-network" class="link">Source Code</a></td>
+                    <td><a href="https://github.com/ben-rosenberg/snippet-network/blob/main/README.md" class="link">About/How To Use</a></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='javascript/script.js') }}"></script>
+</body>
+</html>
