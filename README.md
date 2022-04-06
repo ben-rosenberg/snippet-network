@@ -53,6 +53,13 @@ The intention for this project, as the name suggests, is to become a "network" o
 
 If you have interest in being involved with this project, feel free to contact me, particularly if you are a front-end developer. My skills with front-end development are limited.
 
+## History
+
+Update 04/06/2022
+
+- Refactor HTML and CSS to be responsive to viewport size.
+- Disable spellcheck for text input elements
+
 ## About
 
 You are free to use and modify this code as you wish, though I ask that you leave the text below this in any code and documentation you release. Replace "Created By" with "Originally Created By".
