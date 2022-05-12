@@ -17,6 +17,30 @@ const tabStopButtonElem = document.getElementById('tab_stop_button');
 const tabStopNumberElem = document.getElementById('tab_stop_number');
 const tabStopPlaceholderTextElem = document.getElementById('tab_stop_placeholder_text');
 
+const titleInfoOpenButton = document.getElementById('title_info_open_button');
+const titleInfoCloseButton = document.getElementById('title_info_close_button');
+const titleInfoModal = document.getElementById('title_info_modal');
+
+const prefixInfoOpenButton = document.getElementById('prefix_info_open_button');
+const prefixInfoCloseButton = document.getElementById('prefix_info_close_button');
+const prefixInfoModal = document.getElementById('prefix_info_modal');
+
+const descriptionInfoOpenButton = document.getElementById('description_info_open_button');
+const descriptionInfoCloseButton = document.getElementById('description_info_close_button');
+const descriptionInfoModal = document.getElementById('description_info_modal');
+
+const tabStopInfoOpenButton = document.getElementById('tab_stop_info_open_button');
+const tabStopInfoCloseButton = document.getElementById('tab_stop_info_close_button');
+const tabStopInfoModal = document.getElementById('tab_stop_info_modal');
+
+const codeInfoOpenButton = document.getElementById('code_info_open_button');
+const codeInfoCloseButton = document.getElementById('code_info_close_button');
+const codeInfoModal = document.getElementById('code_info_modal');
+
+const snippetInfoOpenButton = document.getElementById('snippet_info_open_button');
+const snippetInfoCloseButton = document.getElementById('snippet_info_close_button');
+const snippetInfoModal = document.getElementById('snippet_info_modal');
+
 /** SNIPPET JSON CODE BOILERPLATE VARIABLES */
 
 const EMPTY_SNIPPET_TEXT = "\"\": {\r\n"
@@ -40,24 +64,37 @@ const descriptionPre = EMPTY_SNIPPET_TEXT.substring(61, 81);
 const descriptionPost = EMPTY_SNIPPET_TEXT.substring(81);
 
 const preArray = [titlePre, prefixPre, bodyPre, descriptionPre];
-var contentArray = ["", "", "", ""];
+let contentArray = ["", "", "", ""];
 const postArray = [titlePost, prefixPost, bodyPost, descriptionPost];
 
 
-var tabStopNumber = 1;
-var lastCursorPosition = 0;
+let tabStopNumber = 1;
+let lastCursorPosition = 0;
 
 
-/** Loads the empty Snippet text into the Snippet textarea */
+/**
+ * Loads the empty Snippet text into the Snippet textarea and sets a CSS
+ * variable used for top and bottom margin of input label elements. This was
+ * a response to misalignment between the code textareas and the Title text
+ * input, and while it works correctly, a better solution would involve
+ * reworking the HTML and CSS again.
+*/
 function init()
 {
     snippetElem.textContent = EMPTY_SNIPPET_TEXT;
+
+    const codeLabelBottom = document.getElementById("code_label").getBoundingClientRect()["bottom"];
+    const codeInputTop = bodyElem.getBoundingClientRect()["top"];
+    const difference = (codeInputTop - codeLabelBottom) + (0.005 * window.innerHeight);
+    const marginString = (difference / 2).toString() + "px";
+
+    const root = document.querySelector(":root");
+    root.style.setProperty("--label-margin", marginString);
 }
 
 /** 
  * Saves the last cursor position when the "body" (input code) element has
- * lost focus. This facilitates tab stop functionality, specifically auto-
- * incrementing of the tab stop number.
+ * lost focus. This facilitates tab stop functionality.
  */
 bodyElem.addEventListener('focusout', (event) => {
     lastCursorPosition = event.target.selectionStart;
@@ -114,6 +151,8 @@ tabStopButtonElem.addEventListener('click', (event) => {
     } else {
         tabStopNumberElem.value = tabStopNumber;
     }
+
+    tabStopPlaceholderTextElem.value = '';
 })
 
 /**
@@ -147,29 +186,40 @@ bodyElem.addEventListener('keydown', function(event) {
  * bracket when an opening brace is typed unless text is highlighted, in which
  * case it will enclose the selection in the appropriate braces. If "enter" is
  * the next key to be typed, indents and adds an additional linebreak. Updated
- * to work for single and double quotes as well.
+ * to work for quotes and angle brackets as well.
  * TODO Keep track of indent amounts in order to indent the correct amount and
  * place the closing brace in the correct position.
  */
 bodyElem.addEventListener('keydown', function(event) {
     if (event.key != "{" && event.key != "(" && event.key != "["
-            && event.key != "\'" && event.key != "\"") {
+            && event.key != "<" && event.key != "'" && event.key != "\"") {
         return;
     }
 
     let openingChar = event.key;
     let closingChar;
 
-    if (openingChar == "{") {
-        closingChar = "}";
-    } else if (openingChar == "[") {
-        closingChar = "]";
-    } else if (openingChar == "(") {
-        closingChar = ")";
-    } else if (openingChar == "\'") {
-        closingChar = "\'";
-    } else {
-        closingChar = "\"";
+    switch (openingChar) {
+        case "{":
+            closingChar = "}";
+            break;
+        case "[":
+            closingChar = "]";
+            break;
+        case "(":
+            closingChar = ")"; 
+            break;
+        case "<":
+            closingChar = ">";
+            break;
+        case "'":
+            closingChar = "'";
+            break;
+        case "\"":
+            closingChar = "\"";
+            break;
+        default:
+            closingChar = "";
     }
 
     let start = this.selectionStart;
@@ -189,7 +239,7 @@ bodyElem.addEventListener('keydown', function(event) {
     }
     this.selectionStart = this.selectionEnd = start + 1;
 
-    if (openingChar == "\'" || openingChar == "\"") {
+    if (openingChar == "\'" || openingChar == "\"" || openingChar == "<") {
         return;
     }
 
@@ -208,13 +258,13 @@ bodyElem.addEventListener('keydown', function(event) {
 /**
  * Handles the live update of the Snippet-converted code. The bulk of the work
  * is done when the "body" element is receiving input. It handles the need for
- * each line to be a separate element in the array that makes up the Snippet's
- * body key while also escaping certain special characters that would otherwise
- * result in broken JSON code. The current solution requires looping through
- * the entirety of the body element's contents, and while not ideal, doesn't
- * seem to all that computationally heavy. If users require support for very
- * long pieces of code, it likely will be necessary to implement a different
- * solution.
+ * each line to be a separate element in the array that makes up the value at
+ * the Snippet's body key while also escaping certain special characters that
+ * would otherwise result in broken JSON code. The current solution requires
+ * looping through the entirety of the body element's contents, and while not
+ * ideal, doesn't seem to all that computationally heavy. If users require 
+ * support for very long pieces of code, it likely will be necessary to 
+ * implement a different solution.
  */
 for (let i = 0; i < allInputElems.length; i++)
 {
@@ -242,4 +292,117 @@ for (let i = 0; i < allInputElems.length; i++)
         
         snippetElem.textContent = snippet;
     });
+}
+
+/**
+ * Highlights the text in the Snippet element when any part of the element is
+ * clicked.
+ */
+snippetElem.addEventListener('click', (event) => {
+    event.target.selectionStart = 0;
+    event.target.selectionEnd = snippetElem.textContent.length - 1;
+});
+
+/**
+ * Copies the snippet to the clipboard when the copy button is clicked. Calls
+ * the copySuccess() function which is responsible for checkmark animation
+ * signifying that the text was copied.
+ * TODO Check to ensure that the Clipboard API is supported by the user's
+ * browser, use document.execCommand() if not.
+ */
+document.getElementById('copy_button').addEventListener('click', (event) => {
+    navigator.clipboard.writeText(snippetElem.value);
+    copySuccess();
+});
+
+document.getElementById('paste_button').addEventListener('click', () => {
+    navigator.clipboard.readText().then(
+        clipboardContent => bodyElem.value = clipboardContent
+    );
+});
+
+/**
+ * Called when the copy button is clicked. setInterval is called with an arrow
+ * function that decrements the opacity every two milliseconds, and setTimeout
+ * is called that resets opacity to 0 and clears the interval after 2 seconds.
+ */
+function copySuccess()
+{
+    const copyElem = document.getElementById('copy_success');
+    let previousOpacity = 1;
+    copyElem.style.opacity = 1;
+
+    const intervalId = setInterval(() => {
+        copyElem.style.opacity = previousOpacity - 0.002;
+        previousOpacity = copyElem.style.opacity;
+    }, 2);
+
+    setTimeout(() => {
+        copyElem.style.opacity = 0;
+        clearInterval(intervalId);
+    }, 2000);
+}
+
+titleInfoOpenButton.addEventListener('click', () => {
+    titleInfoModal.showModal();
+});
+
+titleInfoCloseButton.addEventListener('click', () => {
+    closeModalAnimation(titleInfoModal);
+});
+
+prefixInfoOpenButton.addEventListener('click', () => {
+    prefixInfoModal.showModal();
+});
+
+prefixInfoCloseButton.addEventListener('click', () => {
+    closeModalAnimation(prefixInfoModal);
+});
+
+descriptionInfoOpenButton.addEventListener('click', () => {
+    descriptionInfoModal.showModal();
+});
+
+descriptionInfoCloseButton.addEventListener('click', () => {
+    closeModalAnimation(descriptionInfoModal);
+});
+
+tabStopInfoOpenButton.addEventListener('click', () => {
+    tabStopInfoModal.showModal();
+});
+
+tabStopInfoCloseButton.addEventListener('click', () => {
+    closeModalAnimation(tabStopInfoModal);
+});
+
+codeInfoOpenButton.addEventListener('click', () => {
+    codeInfoModal.showModal();
+});
+
+codeInfoCloseButton.addEventListener('click', () => {
+    closeModalAnimation(codeInfoModal);
+});
+
+snippetInfoOpenButton.addEventListener('click', () => {
+    snippetInfoModal.showModal();
+});
+
+snippetInfoCloseButton.addEventListener('click', () => {
+    closeModalAnimation(snippetInfoModal);
+});
+
+function closeModalAnimation(elem) {
+    console.log(elem);
+    let previousOpacity = 1;
+
+    let intervalId = setInterval(() => {
+        elem.style.opacity = previousOpacity - 0.01;
+        previousOpacity = elem.style.opacity;
+    }, 2);
+
+    setTimeout(() => {
+        elem.style.opacity = 1;
+        elem.close();
+        clearInterval(intervalId);
+    }, 200);
 }
