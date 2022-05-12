@@ -60,6 +60,12 @@ Update 04/06/2022
 - Refactor HTML and CSS to be responsive to viewport size.
 - Disable spellcheck for text input elements
 
+Update 05/12/2022
+
+- Add copy and paste buttons
+- Add info icons next to each input and output that open modals/dialog boxes with brief instructions for use
+- Styling improvements
+
 ## About
 
 You are free to use and modify this code as you wish, though I ask that you leave the text below this in any code and documentation you release. Replace "Created By" with "Originally Created By".

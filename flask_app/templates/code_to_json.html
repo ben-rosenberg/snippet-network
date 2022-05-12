@@ -1,3 +1,7 @@
+{#
+    Created By: Ben Rosenberg (www.linkedin.com/in/ben-rosenberg-688a60213)
+    First Released: 04/01/2022
+#}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,38 +13,50 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <link rel="shortcut icon" type="image/svg" href="{{ url_for('static', filename='images/snippet_network_logo_1.svg') }}">
+    <link rel="shortcut icon" type="image/svg" href="{{ url_for('static', filename='images/snippet_network_logo_1.svg')}}">
 </head>
 <body onload="init()">
     <div class="top_nav_bar">
-        <a href="/"><h1 class="head1 light_text"><span class="white_logo_text">S</span>nippet<span class="white_logo_text">N</span>etwork</h1></a>
+        <h1 class="head1 light_text"><a class="head1 light_text" href="/"><span class="white_logo_text">S</span>nippet<span class="white_logo_text">N</span>etwork</a></h1>
     </div>
     {# <!-- EVERYTHING EXCEPT NAV BAR --> #}
     <div class="flex_col space_between light_text" id="everything">
         {# <!-- CONTENT --> #}
-        <div class="flex_row space_evenly content">
+        <div class="flex_row space_evenly" id="content">
             {# <!-- NON-CODE INPUTS --> #}
             <div class="flex_col space_between" id="non_code_inputs">
                 {# <!-- TITLE, PREFIX, AND DESCRIPTION --> #}
                 <div class="flex_col gap30">
                     <div class="input_section">
-                        <h3 class="input_label"><label for="title_text">Title</label></h3>
-                        <input type="text" name="title_text" id="title_text" class="text_input" autocomplete="off" spellcheck="false">
+                        <div class="flex_row space_between label_margin">
+                            <h3 class="input_label"><label for="title_text">Title</label></h3>
+                            <button class="info_button" id="title_info_open_button" title="Click for Title info">&#128712;</button>
+                        </div>
+                        <input type="text" name="title_text" id="title_text" class="text_input" autocomplete="off">
                     </div>
                     <div class="input_section">
-                        <h3 class="input_label"><label for="prefix_text">Prefix</label></h3>
+                        <div class="flex_row space_between label_margin">
+                            <h3 class="input_label"><label for="prefix_text">Prefix</label></h3>
+                            <button class="info_button" id="prefix_info_open_button" title="Click for Prefix info">&#128712;</button>
+                        </div>
                         <input type="text" name="prefix_text" id="prefix_text" class="text_input" autocomplete="off" spellcheck="false">
                     </div>
                     <div class="input_section">
-                        <h3 class="input_label"><label for="description_text">Description</label></h3>
-                        <textarea name="description_text" id="description_text" rows="5" cols="25" class="text_input" spellcheck="false"></textarea>
+                        <div class="flex_row space_between label_margin">
+                            <h3 class="input_label"><label for="description_text">Description</label></h3>
+                            <button class="info_button" id="description_info_open_button" title="Click for info">&#128712;</button>
+                        </div>
+                        <textarea name="description_text" id="description_text" rows="5" cols="25" class="text_input"></textarea>
                     </div>
                 </div>
                 {# <!-- TAB STOPS --> #}
                 <div class="flex_col gap30" id="tab_stop_section">
                     <div>
-                        <h3 class="input_label"><label for="tab_stop_placeholder_text">Tab Stop Placeholder Text</label></h3>
-                        <input type="text" name="tab_stop_placeholder_text" id="tab_stop_placeholder_text" class="text_input" autocomplete="off" spellcheck="false">
+                        <div class="flex_row space_between label_margin">
+                            <h3 class="input_label"><label for="tab_stop_placeholder_text">Tab Stop Placeholder Text</label></h3>
+                            <button class="info_button" id="tab_stop_info_open_button" title="Click for tab stop info">&#128712;</button>
+                        </div>
+                        <input type="text" name="tab_stop_placeholder_text" id="tab_stop_placeholder_text" class="text_input" autocomplete="off">
                     </div>
                     <div class="flex_row space_between">
                         <h3 class="input_label"><label for="tab_stop_number">Tab Stop Number</label></h3>
@@ -69,20 +85,101 @@
                             <option value="20">20</option>
                         </select>
                     </div>
-                    <button id="tab_stop_button">Tab Stop At Cursor</button>
+                    <button class="button" id="tab_stop_button">Tab Stop At Cursor</button>
                 </div>
             </div>
             {# <!-- CODE --> #}
             <div class="code_div">
-                <h3 class="input_label"><label for="body_text">Code</label></h3>
+                <div class="flex_row space_between center">
+                    <div class="flex_row gap30">
+                        <h3 class="input_label" id="code_label"><label for="body_text">Code</label></h3>
+                        <button class="info_button" id="code_info_open_button" title="Click for info">&#128712;</button>
+                    </div>
+                    <button class="button" id="paste_button">Paste</button>
+                </div>
                 <textarea name="body_text" id="body_text" class="code" cols="0" rows="0" spellcheck="false" placeholder="Code goes here..."></textarea>
             </div>
             {# <!-- SNIPPET --> #}
             <div class="code_div">
-                <h3 class="input_label"><label for="snippet_text">Snippet</label></h3>
+                <div class="flex_row space_between center">
+                    <div class="flex_row gap30">
+                        <h3 class="input_label"><label for="snippet_text">Snippet</label></h3>
+                        <button class="info_button" id="snippet_info_open_button" title="Click for info">&#128712;</button>
+                    </div>
+                    <div>
+                        <span id="copy_success">&#10004</span>
+                        <button class="button" id="copy_button">Copy</button>
+                    </div>
+                </div>
                 <textarea name="snippet_text" id="snippet_text" class="code" cols="0" rows="0" tabindex="-1" readonly spellcheck="false"></textarea>
             </div>
         </div>
+        {# <!-- DIALOG BOXES --> #}
+        <dialog class="modal light_text" id="title_info_modal">
+            <div class="flex_col">
+                <h3 class="text_center">Title</h3>
+                <p>The <span class="text_emphasize">Title</span> is the text that will appear at the top of the box that is displayed after a Snippet's prefix text has been typed in VS Code.</p>
+                <p>Ideally it should be short and indicative of the purpose of the generated code Snippet.</p>
+                <button class="button self-center" id="title_info_close_button">Got It</button>
+            </div>
+        </dialog>
+        <dialog class="modal light_text" id="prefix_info_modal">
+            <div class="flex_col">
+                <h3 class="text_center">Prefix</h3>
+                <p>The <span class="text_emphasize">Prefix</span> is the text that, when typed in VS Code, will prompt VS Code's intelliSense to suggest the Snippet.</p>
+                <p>Prefixes should probably be short, easy to remember, and related to the Snippet's code.</p>
+                <button class="button self-center" id="prefix_info_close_button">Got It</button>
+            </div>
+        </dialog>
+        <dialog class="modal light_text" id="description_info_modal">
+            <div class="flex_col">
+                <h3 class="text_center">Description</h3>
+                <p>The <span class="text_emphasize">Description</span> appears in the box displayed by VS Code after a Snippet has been triggered.</p>
+                <p>It serves as a more verbose description of the purpose or functionality of the Snippet's code than the Title if needed.</p>
+                <button class="button self-center" id="description_info_close_button">Got It</button>
+            </div>
+        </dialog>
+        <dialog class="modal light_text" id="tab_stop_info_modal">
+            <div class="flex_col">
+                <h3 class="text_center">Tab Stops</h3>
+                <p>
+                    <span class="text_emphasize">Tab Stops</span> are points in the code generated by a Snippet in VS Code that are
+                    reached sequentially using the tab key.
+                </p>
+                <p>
+                    They allow the programmer to fill in portions of the generated code that are likely to change every time, like variable names, 
+                    conditional expressions, etc. The optional <span class="text_emphasize">Placeholder Text</span> for a tab stop serves as a reminder of
+                    what code belongs in the position of the tab stop.
+                </p>
+                <p>
+                    Place your cursor in the position where the placeholder should go, enter the placeholder text value
+                    if desired, and click the button. For more information on tab stops, including tab stop number, see
+                    the <a href="https://github.com/ben-rosenberg/snippet-network/blob/main/README.md" class="link">documentation</a> for this project.
+                </p>
+                <button class="button self-center" id="tab_stop_info_close_button">Got It</button>
+            </div>
+        </dialog>
+        <dialog class="modal light_text" id="code_info_modal">
+            <div class="flex_col">
+                <h3 class="text_center">Code</h3>
+                <p>The code that you would like VS Code to generate when this Snippet is triggered.</p>
+                <button class="button self-center" id="code_info_close_button">Got It</button>
+            </div>
+        </dialog>
+        <dialog class="modal light_text" id="snippet_info_modal">
+            <div class="flex_col">
+                <h3 class="text_center">Snippet</h3>
+                <p>
+                    The <span class="text_emphasize">Snippet</span> is the JSON code that enables usage of this user-defined Snippet
+                    when saved in your VS Code Snippet JSON files.
+                </p>
+                <p>
+                    For instructions on how to do this, see the
+                    <a href="https://github.com/ben-rosenberg/snippet-network/blob/main/README.md" class="link">documentation</a> for this project.
+                </p>
+                <button class="button self-center" id="snippet_info_close_button">Got It</button>
+            </div>
+        </dialog>
         {# <!-- INFO --> #}
         <footer>
             <table id="footer_table">

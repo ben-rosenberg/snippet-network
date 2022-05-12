@@ -13,13 +13,19 @@ body {
     background-color: #303030;
 }
 
+/* NOTE: --label-margin is set using JavaScript */
 :root {
     --code-elem-height: 75vh;
     --code-elem-width: 32vw;
+    --label-margin: 0;
 }
 
 a {
     text-decoration: none;
+}
+
+p {
+    margin-top: 1vh;
 }
 
 .flex_row {
@@ -47,8 +53,25 @@ a {
     justify-content: space-evenly;
 }
 
+.center {
+    align-items: center;
+}
+
+.self-center {
+    align-self: center;
+}
+
 .light_text {
     color: rgb(221, 221, 221);
+}
+
+.text_center {
+    text-align: center;
+}
+
+.text_emphasize {
+    font-style: italic;
+    font-weight: bold;
 }
 
 .link {
@@ -84,12 +107,17 @@ textarea {
     align-items: center;
 }
 
-.content {
+#content {
     padding-top: 1.4vh;
 }
 
 #non_code_inputs {
-    width: max-content;
+    width: 14vw;
+}
+
+.label_margin {
+    margin-top: var(--label-margin);
+    margin-bottom: var(--label-margin);
 }
 
 .text_input {
@@ -116,19 +144,32 @@ textarea {
     margin-left: 1vw;
 }
 
-#tab_stop_button {
+.button {
     background-color: black;
     border: 1px solid rgb(221, 221, 221);
     font-size: 1.17rem;
     font-weight: bold;
     color: rgb(221, 221, 221);
     padding: 2px 5px 4px 5px;
+    border-radius: 5px;
 }
 
-#tab_stop_button:hover {
+.button:hover {
     border: 2px solid rgb(221, 221, 221);
-    cursor: pointer;
+    cursor: default;
     padding: 1px 4px 3px 4px;
+}
+
+.info_button {
+    border: none;
+    color:rgb(221, 221, 221);
+    background-color: transparent;
+    font-size: 1.17rem;
+}
+
+.info_button:hover {
+    cursor: pointer;
+    color: white;
 }
 
 .code {
@@ -139,8 +180,26 @@ textarea {
     font-family: 'Courier New', Courier, monospace;
     padding: 0.5vh;
     font-size: 1rem;
-    margin-top: 0.5vh;
+    /* margin-top: 0.5vh; */
     border: 1px solid rgb(221, 221, 221);
+}
+
+#copy_button, #paste_button {
+    margin-bottom: 0.5vh;
+}
+
+.align_top {
+    align-items: flex-start;
+}
+
+#copy_success {
+    color: green;
+    font-size: 1.17rem;
+    font-weight: bold;
+    opacity: 0;
+}
+
+#body_text {
     white-space: pre;
 }
 
@@ -153,4 +212,24 @@ footer {
     color:rgb(221, 221, 221);
     border-spacing: 50px 10px;
     margin: 0 auto;
+}
+
+.modal {
+    max-width: 30vw;
+    margin: auto auto;
+    background-color: #303030;
+    border: 2px solid rgb(221, 221, 221);
+    border-radius: 5px;
+    padding: 1vh;
+    font-size: 1 rem;
+}
+
+.modal::backdrop {
+    background: black;
+    opacity: 0.35;
+}
+
+.modal .button {
+    margin-top: 1vh;
+    justify-self: center;
 }
