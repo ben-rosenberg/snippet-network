@@ -55,16 +55,21 @@ If you have interest in being involved with this project, feel free to contact m
 
 ## History
 
-Update 04/06/2022
+### Update/Bug Fix 05/25/2022
+
+- Obtain and install HTTPS certifications.
+- The copy and paste features did not function previously, as browsers require a secure connection to move data to and from the clipboard. These features now function properly.
+
+### Update 05/12/2022
+
+- Add copy and paste buttons.
+- Add info icons next to each input and output that open modals/dialog boxes with brief instructions for use
+- Styling improvements.
+
+### Update 04/06/2022
 
 - Refactor HTML and CSS to be responsive to viewport size.
-- Disable spellcheck for text input elements
-
-Update 05/12/2022
-
-- Add copy and paste buttons
-- Add info icons next to each input and output that open modals/dialog boxes with brief instructions for use
-- Styling improvements
+- Disable spellcheck for text input elements.
 
 ## About
 
