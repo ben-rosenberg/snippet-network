@@ -1,6 +1,6 @@
-# [SnippetNetwork](http://3.22.223.229/)
+# SnippetNetwork
 
-In its [first iteration](http://3.22.223.229/), this project converts pieces of code to VS Code's JSON syntax for user-defined Snippets. Snippets facilitate greatly improved productivity when working in Visual Studio Code by allowing commonly reused code to be quickly and easily added to existing code. After a user-defined Snippet has been written in the appropriate \<language\>.json file, all it takes is triggering IntelliSense to suggest the Snippet by typing the "Prefix" value and pressing tab.
+In its first iteration, [snippetnetwork.com](https://snippetnetwork.com) converts pieces of code to VS Code's JSON syntax for user-defined Snippets. Snippets facilitate greatly improved productivity when working in Visual Studio Code by allowing commonly reused code to be quickly and easily added to existing code. After a user-defined Snippet has been written in the appropriate \<language\>.json file, all it takes is triggering IntelliSense to suggest the Snippet by typing the "Prefix" value and pressing tab.
 
 After the Snippet has been set up, using it while working through projects is trivial. But writing the JSON code for a Snippet is tedious and time-consuming, exponentially so the more lines the code contains, as each line must be its own string in the Snippet's "Body" array. The first iteration of this project solves a problem for which there are already solutions, but my intention for the scope of this project involves more than the basic code-to-Snippet conversion functionality. See the "Future" section for details. Additionally, I have found the tab stop/placeholder text functionality lacking in other solutions, and I desired a better solution.
 
