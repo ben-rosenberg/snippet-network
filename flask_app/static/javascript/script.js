@@ -90,6 +90,23 @@ function init()
 
     const root = document.querySelector(":root");
     root.style.setProperty("--label-margin", marginString);
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', '/get_prev_values');
+
+    xhr.responseType = 'json';
+
+    let savedInputValues;
+    xhr.onload = () => {
+        savedInputValues = xhr.response;
+        console.log(xhr.response['prefix_text']);
+        for (let element in xhr.response) {
+            console.log(element + ': ' + savedInputValues[element]);
+            document.getElementById(element).value = savedInputValues[element];
+        }
+    }
+
+    xhr.send();
 }
 
 /** 
@@ -405,4 +422,83 @@ function closeModalAnimation(elem) {
         elem.close();
         clearInterval(intervalId);
     }, 200);
+}
+
+
+/** STORING INPUT VALS IN SESSION */
+
+function replaceSpaces(value) {
+    let parsedValue = '';
+
+    for (let i = 0; i < value.length; i++) {
+        if (value[i] === ' ') {
+            parsedValue += '+';
+            continue;
+        }
+
+        parsedValue += value[i];
+    }
+
+    return parsedValue;
+}
+
+function constructInputValStr() {
+    return `title=${replaceSpaces(titleElem.value)}\
+        &prefix=${replaceSpaces(prefixElem.value)}\
+        &description=${replaceSpaces(descriptionElem.value)}\
+        &tab_stop_placeholder_text=${replaceSpaces(tabStopPlaceholderTextElem.value)}\
+        &tab_stop_number=${tabStopNumber.toString()}\
+        &body=${replaceSpaces(bodyElem.value)}`
+}
+
+
+/* for (let inputElem of allInputElems) {
+    inputElem.addEventListener('change', (event) => {
+        fetch('http://localhost:5000/save', {
+                method: 'POST',
+                body: constructInputValObj(), 
+                headers: { "Accept": "application/json", "Content-Type": "application/json" } })
+            .then(response => response.json())
+            .then(data => console.log(data));
+    });
+} */
+
+//function reqListener()
+
+/**
+ * 
+ * @param {Event} event 
+ */
+const sendHttpRequestToServer = (event) => {
+    const dataToSend = {
+        element: event.target.id,
+        value: event.target.value
+    }
+
+    console.log(dataToSend);
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', '/save');
+    xhr.responseType = 'json';
+    xhr.setRequestHeader('Content-Type', 'application/json');
+
+    xhr.onload = (responseData) => console.log(responseData);
+
+    xhr.send(JSON.stringify(dataToSend));
+}
+
+/**
+ * 
+ * @param {Event} event 
+ */
+function submitChanges(event) {
+    console.log(event.target.id);
+    let oReq = new XMLHttpRequest();
+    oReq.open('POST', '/save');
+    oReq.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
+    oReq.send(constructInputValStr());
+}
+
+for (let inputElem of allInputElems) {
+    inputElem.addEventListener('change', sendHttpRequestToServer);
 }
