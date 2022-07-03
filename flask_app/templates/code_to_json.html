@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="shortcut icon" type="image/svg" href="{{ url_for('static', filename='images/snippet_network_logo_1.svg')}}">
 </head>
-<body onload="init()">
+<body>
     <div class="top_nav_bar">
         <h1 class="head1 light_text"><a class="head1 light_text" href="/"><span class="white_logo_text">S</span>nippet<span class="white_logo_text">N</span>etwork</a></h1>
     </div>
@@ -192,5 +192,6 @@
         </footer>
     </div>
     <script src="{{ url_for('static', filename='javascript/script.js') }}"></script>
+    <script src="{{ url_for('static', filename='javascript/saveAndRetrieveInputsFromSession.js') }}"></script>
 </body>
 </html>

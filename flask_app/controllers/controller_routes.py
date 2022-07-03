@@ -5,7 +5,7 @@ from flask_app import app, render_template, request, session
 def index():
     return render_template('code_to_json.html')
 
-@app.route('/get_prev_values', methods = ["GET"])
+@app.route('/retrieve', methods = ["GET"])
 def get_input_values():
     return session.get('input_values', { })
 
