@@ -192,6 +192,7 @@
         </footer>
     </div>
     <script src="{{ url_for('static', filename='javascript/script.js') }}"></script>
-    <script src="{{ url_for('static', filename='javascript/saveAndRetrieveInputsFromSession.js') }}"></script>
+    {# <!-- <script src="{{ url_for('static', filename='javascript/saveAndRetrieveInputsFromSession.js') }}"></script> --> #}
+    <script type="module" src="{{ url_for('static', filename='javascript/main.js') }}"></script>
 </body>
 </html>

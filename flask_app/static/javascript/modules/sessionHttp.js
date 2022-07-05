@@ -1,14 +1,5 @@
-//import { ALL_INPUT_ELEM_IDS } from './CONSTANTS';
+import { updateSnippetOnLoad } from './processCodeToJson.js';
 
-const CONSTANTS = {
-    ALL_INPUT_ELEM_IDS: [
-        'title_text',
-        'prefix_text',
-        'description_text',
-        'body_text',
-        'tab_stop_number'
-    ]
-}
 
 /**
  * 
@@ -17,7 +8,7 @@ const CONSTANTS = {
  * @param {Object|Undefined} updatedData 
  * @returns {Promise}
  */
-const serverHttpRequest = (method, url, updatedData = undefined) => {
+ const serverHttpRequest = (method, url, updatedData = undefined) => {
     if (method.toUpperCase() !== 'GET' && method.toUpperCase() !== 'POST') {
         throw new Error(`Error (method = ${method}): Method must be 'GET' or 'POST'`);
     }
@@ -43,18 +34,13 @@ const serverHttpRequest = (method, url, updatedData = undefined) => {
     return promise;
 };
 
-/**
- * 
- * @param {Event} event 
- */
- const sendNewValue = (event) => {
-    serverHttpRequest('POST', '/save', { element: event.target.id, value: event.target.value })
-        .then(responseData => console.log('POST:\n' + responseData))
-        .catch(error => console.log(error));
-}
-
-const loadStoredValues = () => {
-    const allInputElems = initAllInputElems();
+const loadStoredValues = (allInputElems) => {
+    /* const allInputElems = {
+        title_text: document.getElementById('title_text'),
+        prefix_text: document.getElementById('prefix_text'),
+        body_text: document.getElementById('body_text'),
+        description_text: document.getElementById('description_text'),
+    }; */
 
     serverHttpRequest('GET', '/retrieve')
         .then(responseData => {
@@ -64,20 +50,22 @@ const loadStoredValues = () => {
                     allInputElems[key].value = responseData[key];
                 }
             }
+        }).then(() => {
+            updateSnippetOnLoad();
         }).catch(error => {
             console.log(error);
         });
 };
 
-const initAllInputElems = () => {
-    const allInputElems = {};
+/**
+ * 
+ * @param {Event} event 
+ */
+const sendNewValue = (event) => {
+    serverHttpRequest('POST', '/save', { element: event.target.id, value: event.target.value })
+        .then(responseData => console.log('POST:\n' + responseData))
+        .catch(error => console.log(error));
+}
 
-    for (let id of CONSTANTS.ALL_INPUT_ELEM_IDS) {
-        allInputElems[id] = document.getElementById(id);
-        allInputElems[id].addEventListener('change', sendNewValue);
-    }
 
-    return allInputElems;
-};
-
-window.addEventListener('load', loadStoredValues);
+export { sendNewValue, loadStoredValues };
