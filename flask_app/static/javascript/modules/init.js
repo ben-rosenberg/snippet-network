@@ -1,4 +1,5 @@
-import { sendNewValue, loadStoredValues } from './sessionHttp.js';
+import { sendNewValueFetch, loadStoredValuesFetch } from './sessionHttp.js';
+import CONSTANTS from './CONSTANTS.js';
 
 const ALL_INPUT_ELEMS = {
     title_text: document.getElementById('title_text'),
@@ -18,11 +19,11 @@ const initStyling = () => {
 }
 
 const initInputElems = () => {
-    for (let elemKey in ALL_INPUT_ELEMS) {
-        ALL_INPUT_ELEMS[elemKey].addEventListener('change', sendNewValue);
+    for (let elemKey in CONSTANTS.ELEMENTS_STORED_IN_SESSION) {
+        CONSTANTS.ELEMENTS_STORED_IN_SESSION[elemKey].addEventListener('change', sendNewValueFetch);
     }
 
-    loadStoredValues(ALL_INPUT_ELEMS);
+    loadStoredValuesFetch();
 }
 
 export { initStyling, initInputElems, ALL_INPUT_ELEMS };

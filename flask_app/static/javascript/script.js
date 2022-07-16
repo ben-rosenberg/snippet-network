@@ -309,99 +309,99 @@ let lastCursorPosition = 0;
  * TODO Check to ensure that the Clipboard API is supported by the user's
  * browser, use document.execCommand() if not.
  */
-document.getElementById('copy_button').addEventListener('click', (event) => {
-    navigator.clipboard.writeText(snippetElem.value);
-    copySuccess();
-});
+// document.getElementById('copy_button').addEventListener('click', (event) => {
+//     navigator.clipboard.writeText(snippetElem.value);
+//     copySuccess();
+// });
 
-document.getElementById('paste_button').addEventListener('click', () => {
-    navigator.clipboard.readText().then(
-        clipboardContent => bodyElem.value = clipboardContent
-    );
-});
+// document.getElementById('paste_button').addEventListener('click', () => {
+//     navigator.clipboard.readText().then(
+//         clipboardContent => bodyElem.value = clipboardContent
+//     );
+// });
 
 /**
  * Called when the copy button is clicked. setInterval is called with an arrow
  * function that decrements the opacity every two milliseconds, and setTimeout
  * is called that resets opacity to 0 and clears the interval after 2 seconds.
  */
-function copySuccess()
-{
-    const copyElem = document.getElementById('copy_success');
-    let previousOpacity = 1;
-    copyElem.style.opacity = 1;
+// function copySuccess()
+// {
+//     const copyElem = document.getElementById('copy_success');
+//     let previousOpacity = 1;
+//     copyElem.style.opacity = 1;
 
-    const intervalId = setInterval(() => {
-        copyElem.style.opacity = previousOpacity - 0.002;
-        previousOpacity = copyElem.style.opacity;
-    }, 2);
+//     const intervalId = setInterval(() => {
+//         copyElem.style.opacity = previousOpacity - 0.002;
+//         previousOpacity = copyElem.style.opacity;
+//     }, 2);
 
-    setTimeout(() => {
-        copyElem.style.opacity = 0;
-        clearInterval(intervalId);
-    }, 2000);
-}
+//     setTimeout(() => {
+//         copyElem.style.opacity = 0;
+//         clearInterval(intervalId);
+//     }, 2000);
+// }
 
-titleInfoOpenButton.addEventListener('click', () => {
-    titleInfoModal.showModal();
-});
+// titleInfoOpenButton.addEventListener('click', () => {
+//     titleInfoModal.showModal();
+// });
 
-titleInfoCloseButton.addEventListener('click', () => {
-    closeModalAnimation(titleInfoModal);
-});
+// titleInfoCloseButton.addEventListener('click', () => {
+//     closeModalAnimation(titleInfoModal);
+// });
 
-prefixInfoOpenButton.addEventListener('click', () => {
-    prefixInfoModal.showModal();
-});
+// prefixInfoOpenButton.addEventListener('click', () => {
+//     prefixInfoModal.showModal();
+// });
 
-prefixInfoCloseButton.addEventListener('click', () => {
-    closeModalAnimation(prefixInfoModal);
-});
+// prefixInfoCloseButton.addEventListener('click', () => {
+//     closeModalAnimation(prefixInfoModal);
+// });
 
-descriptionInfoOpenButton.addEventListener('click', () => {
-    descriptionInfoModal.showModal();
-});
+// descriptionInfoOpenButton.addEventListener('click', () => {
+//     descriptionInfoModal.showModal();
+// });
 
-descriptionInfoCloseButton.addEventListener('click', () => {
-    closeModalAnimation(descriptionInfoModal);
-});
+// descriptionInfoCloseButton.addEventListener('click', () => {
+//     closeModalAnimation(descriptionInfoModal);
+// });
 
-tabStopInfoOpenButton.addEventListener('click', () => {
-    tabStopInfoModal.showModal();
-});
+// tabStopInfoOpenButton.addEventListener('click', () => {
+//     tabStopInfoModal.showModal();
+// });
 
-tabStopInfoCloseButton.addEventListener('click', () => {
-    closeModalAnimation(tabStopInfoModal);
-});
+// tabStopInfoCloseButton.addEventListener('click', () => {
+//     closeModalAnimation(tabStopInfoModal);
+// });
 
-codeInfoOpenButton.addEventListener('click', () => {
-    codeInfoModal.showModal();
-});
+// codeInfoOpenButton.addEventListener('click', () => {
+//     codeInfoModal.showModal();
+// });
 
-codeInfoCloseButton.addEventListener('click', () => {
-    closeModalAnimation(codeInfoModal);
-});
+// codeInfoCloseButton.addEventListener('click', () => {
+//     closeModalAnimation(codeInfoModal);
+// });
 
-snippetInfoOpenButton.addEventListener('click', () => {
-    snippetInfoModal.showModal();
-});
+// snippetInfoOpenButton.addEventListener('click', () => {
+//     snippetInfoModal.showModal();
+// });
 
-snippetInfoCloseButton.addEventListener('click', () => {
-    closeModalAnimation(snippetInfoModal);
-});
+// snippetInfoCloseButton.addEventListener('click', () => {
+//     closeModalAnimation(snippetInfoModal);
+// });
 
-function closeModalAnimation(elem) {
-    console.log(elem);
-    let previousOpacity = 1;
+// function closeModalAnimation(elem) {
+//     console.log(elem);
+//     let previousOpacity = 1;
 
-    let intervalId = setInterval(() => {
-        elem.style.opacity = previousOpacity - 0.01;
-        previousOpacity = elem.style.opacity;
-    }, 2);
+//     let intervalId = setInterval(() => {
+//         elem.style.opacity = previousOpacity - 0.01;
+//         previousOpacity = elem.style.opacity;
+//     }, 2);
 
-    setTimeout(() => {
-        elem.style.opacity = 1;
-        elem.close();
-        clearInterval(intervalId);
-    }, 200);
-}
+//     setTimeout(() => {
+//         elem.style.opacity = 1;
+//         elem.close();
+//         clearInterval(intervalId);
+//     }, 200);
+// }
